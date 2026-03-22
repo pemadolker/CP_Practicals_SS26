@@ -1,6 +1,6 @@
 Student: **Pema Dolker**  
-Course: CSF     
-Semester: SS26
+Course: CSF 303 
+Semester: SS2026
 
 # Practical 1 analysis 
 
