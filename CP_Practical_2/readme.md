@@ -1,4 +1,4 @@
-Student: **Pema Dolker**  
+<!-- Student: **Pema Dolker**  
 Course: CSF 303   
 Semester: SS2026
 
@@ -186,6 +186,6 @@ O(N × M × K)
 
 <!-- This was the hardest problem for me. I initially tried BFS, but it gave wrong answers because the costs were different. After switching to Dijkstra and fixing my mistakes, it finally worked. This problem really helped me understand when BFS is not enough and why weighted shortest path algorithms are needed. -->
 
-
+<!-- 
 Overall, these problems covered a wide range of topics, from simple arrays to advanced data structures and graph algorithms. Some problems were quite challenging at first but working through them step by step helped me improve my understanding and confidence in problem solving. I also learned the importance of choosing the right algorithm for each problem instead of forcing one approach.
-
+ --> 
