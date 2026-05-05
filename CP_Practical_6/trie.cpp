@@ -1,13 +1,14 @@
 #include <iostream>
-#include <vector>
-#include <string>
+#include <unordered_map>
+using namespace std;
 
-struct TrieNode {
-    TrieNode* children[26];
+class TrieNode {
+public:
+    unordered_map<char, TrieNode*> children;
     bool isEndOfWord;
 
-    TrieNode() : isEndOfWord(false) {
-        for (int i = 0; i < 26; i++) children[i] = nullptr;
+    TrieNode() {
+        isEndOfWord = false;
     }
 };
 
@@ -16,16 +17,16 @@ private:
     TrieNode* root;
 
     bool isEmpty(TrieNode* node) {
-        for (int i = 0; i < 26; i++)
-            if (node->children[i]) return false;
-        return true;
+        return node->children.empty();
     }
 
-    TrieNode* remove(TrieNode* node, std::string word, int depth = 0) {
+    TrieNode* deleteHelper(TrieNode* node, const string& key, int depth) {
         if (!node) return nullptr;
 
-        if (depth == word.size()) {
-            if (node->isEndOfWord) node->isEndOfWord = false;
+        if (depth == key.size()) {
+            if (node->isEndOfWord)
+                node->isEndOfWord = false;
+
             if (isEmpty(node)) {
                 delete node;
                 node = nullptr;
@@ -33,49 +34,60 @@ private:
             return node;
         }
 
-        int index = word[depth] - 'a';
-        node->children[index] = remove(node->children[index], word, depth + 1);
+        char ch = key[depth];
+        node->children[ch] = deleteHelper(node->children[ch], key, depth + 1);
 
         if (isEmpty(node) && !node->isEndOfWord) {
             delete node;
             node = nullptr;
         }
+
         return node;
     }
 
 public:
-    Trie() { root = new TrieNode(); }
+    Trie() {
+        root = new TrieNode();
+    }
 
-    void insert(std::string key) {
+    void insert(const string& key) {
         TrieNode* curr = root;
-        for (char c : key) {
-            int index = c - 'a';
-            if (!curr->children[index]) curr->children[index] = new TrieNode();
-            curr = curr->children[index];
+        for (char ch : key) {
+            if (!curr->children[ch])
+                curr->children[ch] = new TrieNode();
+            curr = curr->children[ch];
         }
         curr->isEndOfWord = true;
     }
 
-    bool search(std::string key) {
+    bool search(const string& key) {
         TrieNode* curr = root;
-        for (char c : key) {
-            int index = c - 'a';
-            if (!curr->children[index]) return false;
-            curr = curr->children[index];
+        for (char ch : key) {
+            if (!curr->children[ch])
+                return false;
+            curr = curr->children[ch];
         }
-        return (curr != nullptr && curr->isEndOfWord);
+        return curr->isEndOfWord;
     }
 
-    void remove(std::string key) {
-        root = remove(root, key);
+    void remove(const string& key) {
+        root = deleteHelper(root, key, 0);
     }
 };
 
+// Test
 int main() {
-    Trie myTrie;
-    myTrie.insert("hello");
-    std::cout << "Search 'hello': " << (myTrie.search("hello") ? "Found" : "Not Found") << std::endl;
-    myTrie.remove("hello");
-    std::cout << "Search 'hello' after delete: " << (myTrie.search("hello") ? "Found" : "Not Found") << std::endl;
+    Trie trie;
+
+    trie.insert("cat");
+    trie.insert("car");
+
+    cout << "Search cat: " << trie.search("cat") << endl;
+    cout << "Search car: " << trie.search("car") << endl;
+
+    trie.remove("cat");
+
+    cout << "Search cat after delete: " << trie.search("cat") << endl;
+
     return 0;
 }

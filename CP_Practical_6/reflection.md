@@ -3,8 +3,14 @@
 ### 1. Basic Trie
 When considering the implementation of Tries, there is a considerable tradeoff between time and space. A search of a given string will take O(L) to complete where L is the character length of the word. A large amount of memory must be allocated to create each node with a 26-position array for each character that exists in the word being searched. In addition to the time taken to search the string O(L), a large amount of memory must also be allocated to create each new node that corresponds to each character of the word being searched. The most complex aspect of implementing a Trie was having to create the recursive remove function which determined if a node was "useless" (no children & not an end-of-a-word) thus avoiding memory leaks in implementing the Trie.
 
+![alt text](image.png)
+
 ### 2. PATRICIA Tree (Radix Tree)
 The PATRICIA Tree is an improvement over a standard Trie. PATRICIA does not create one node for every character in the string, but instead creates edges to store the string on each edge. Because of the large number of words that share very long common prefixes or no splits at all within a given list of words, the combined result is that there are fewer nodes for an ASCII based computer to deal with. The most complicated part of implementing a PATRICIA Tree is the splitting of edges, whereby a new word being added that partially exists on the old one, causes the old edge to be split into two edges.
 
+![alt text](image-1.png)
+
 ### 3. Manacher's Algorithm
 Manacher's Algorithm is an excellent example of a well optimized algorithm. By converting what a string typically would look like without the introduction of the `#` character, we treat even and odd length palindromes in one fashion. Hence, we see an important lesson of symmetry. By keeping an index of the rightmost located palindrome already identified allows us to avoid comparisons to determine if the next bundle of letters being compared is a palindrome, resulting in O(n) linear time complexity.
+
+![alt text](image-2.png)

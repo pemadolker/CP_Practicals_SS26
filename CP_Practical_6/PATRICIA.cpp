@@ -97,3 +97,17 @@ public:
         }
     }
 };
+
+
+int main() {
+    PatriciaTrie trie;
+
+    trie.insert("cat");
+    trie.insert("car");
+
+    cout << "Search cat: " << (trie.search("cat") ? "Found" : "Not Found") << endl;
+    cout << "Search car: " << (trie.search("car") ? "Found" : "Not Found") << endl;
+    cout << "Search cap: " << (trie.search("cap") ? "Found" : "Not Found") << endl;
+
+    return 0;
+}
